@@ -30,30 +30,39 @@ const SearchPatient = () => {
         // if (!info.address) {
         //     return alert("please fille the details")
         // }
-        e.preventDefault();
-        console.log(info);
-        var config = {
-            method: 'delete',
-            url: 'https://clinicappbackend.onrender.com/users',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            data: item
-        };
+        if (window.confirm(`Are you sure you want to delete patient ${item.name} permanently from the database?`)) {
+            // Save it!
+            e.preventDefault();
+            console.log(info);
+            var config = {
+                method: 'delete',
+                url: "https://clinicappbackend.onrender.com/users",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: item
+            };
 
-        axios(config)
-            .then(function (response) {
-                console.log(JSON.stringify(response.data));
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+            axios(config)
+                .then(function (response) {
+                    console.log(JSON.stringify(response.data));
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
 
-        {
-            data.map((key) => {
-                console.log(data.Name)
-            })
+            {
+                data.map((key) => {
+                    console.log(data.Name)
+                })
+            }
+            alert(`Information of patient ${item.name} was deleted from the database`);
+            window.location.reload();
+        } else {
+            // Do nothing!
+            alert(`Information of patient ${item.name} was not deleted from the database`);
         }
+
 
 
     }
